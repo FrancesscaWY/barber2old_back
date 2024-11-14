@@ -24,19 +24,42 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
     return distance;
 }
 
-// 返回最近的点
-function findNearest(elderlyLat, elderlyLon, barberList) {
-    let nearestDistance = Number.MAX_VALUE;
-    let nearestBarber = null;
+// // 返回最近的点
+// function findNearest(elderlyLat, elderlyLon, barberList) {
+//     let nearestDistance = Number.MAX_VALUE;
+//     let nearestBarber = null;
+//
+//     for (const barber of barberList) {
+//         const distance = calculateDistance(elderlyLat, elderlyLon, barber.latitude, barber.longitude);
+//
+//         if (distance < nearestDistance) {
+//             nearestDistance = distance;
+//             nearestBarber = barber;
+//         }
+//     }
+//
+//     return nearestBarber;
+// }
 
-    for (const barber of barberList) {
-        const distance = calculateDistance(elderlyLat, elderlyLon, barber.latitude, barber.longitude);
+// 使用最小堆法找前 10 小值
+function findTop10Closest(barbers, calculateDistance) {
+    // 使用一个最小堆，模拟前10个距离最近的理发师
+    let top10 = [];
 
-        if (distance < nearestDistance) {
-            nearestDistance = distance;
-            nearestBarber = barber;
+    for (let barber of barbers) {
+        const distance = calculateDistance(barber);
+
+        // 如果当前堆不足10个，直接加入
+        if (top10.length < 10) {
+            top10.push({ barber, distance });
+            top10.sort((a, b) => a.distance - b.distance);
+        } else if (distance < top10[9].distance) {
+            // 如果堆已满且当前距离比第10个小，则替换第10个
+            top10[9] = { barber, distance };
+            top10.sort((a, b) => a.distance - b.distance);
         }
     }
 
-    return nearestBarber;
+    return top10.map(entry => entry.barber);
 }
+

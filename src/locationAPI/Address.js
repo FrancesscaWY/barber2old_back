@@ -49,7 +49,7 @@ async function getIpLocation(key) {
     }
 }
 // 测试调用
-const key = "2f4eff8990837ba9fd0ace2c67c1a043"; // 请替换为您的高德地图 API Key
+const key = "2f4eff8990837ba9fd0ace2c67c1a043";
 getIpLocation(key).then(location => {
     console.log(location);
 });
