@@ -1,3 +1,4 @@
+
 const axios = require('axios');
 const fs = require('fs');
 
@@ -48,8 +49,14 @@ async function getIpLocation(key) {
         return null;
     }
 }
+
+//  登录注册获取位置信息（点击登录调用）
+function registerWithLocation() {
+    const key = "2f4eff8990837ba9fd0ace2c67c1a043";
+    getIpLocation(key).then(location => {
+        console.log(location);
+    });
+}
 // 测试调用
-const key = "2f4eff8990837ba9fd0ace2c67c1a043";
-getIpLocation(key).then(location => {
-    console.log(location);
-});
+// registerWithLocation();
+
